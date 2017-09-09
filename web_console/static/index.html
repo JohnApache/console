@@ -87,7 +87,7 @@
 
     // 接口
     post("create_exec", query, function(event) {
-      if (event.eid) {
+      if (!event.eid) {
         return
       }
       var protocol = location.protocol.indexOf("https") == 0 ? "wss" : "ws"
