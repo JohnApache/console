@@ -9,8 +9,12 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/unrolled/render"
-	"github.com/wzshiming/console"
 	"golang.org/x/net/websocket"
+
+	"github.com/wzshiming/console"
+	_ "github.com/wzshiming/console/cmd"
+	_ "github.com/wzshiming/console/docker"
+	_ "github.com/wzshiming/console/ssh"
 )
 
 var (
