@@ -14,8 +14,8 @@ func main() {
 
 	// web
 	n := negroni.New(
-		negroni.NewRecovery(),
 		negroni.NewLogger(),
+		negroni.NewRecovery(),
 		negroni.NewStatic(http.Dir("static")),
 	)
 
