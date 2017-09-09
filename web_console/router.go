@@ -61,7 +61,11 @@ func execRouter() (*mux.Router, error) {
 	// 创建连接
 	mux0.HandleFunc("/create_exec", func(w http.ResponseWriter, r *http.Request) {
 		req := &console.ReqCreateExec{}
-		requests(r.Body, &req)
+		err := requests(r.Body, &req)
+		if err != nil {
+			rend.JSON(w, http.StatusBadRequest, errMsg{err.Error()})
+			return
+		}
 
 		// 获取驱动
 		sesss, err := console.GetDrivers(req.Name, req.Host)
@@ -107,11 +111,15 @@ func execRouter() (*mux.Router, error) {
 	// 窗口大小调整
 	mux0.HandleFunc("/resize_exec_tty", func(w http.ResponseWriter, r *http.Request) {
 		req := &console.ReqResizeExecTTY{}
-		requests(r.Body, &req)
+		err := requests(r.Body, &req)
+		if err != nil {
+			rend.JSON(w, http.StatusBadRequest, errMsg{err.Error()})
+			return
+		}
 
 		client := getSession(req.EId)
 
-		err := client.ResizeExecTTY(req)
+		err = client.ResizeExecTTY(req)
 		if err != nil {
 			rend.JSON(w, http.StatusBadRequest, errMsg{err.Error()})
 			return
