@@ -58,12 +58,12 @@
     // 开始终端
     var term = new Terminal({
       colors: Terminal.colors,
-      theme: 'default',
+      theme: "default",
       convertEol: false,
-      termName: 'xterm',
+      termName: "xterm",
       geometry: [80, 24],
       cursorBlink: true,
-      cursorStyle: 'block',
+      cursorStyle: "block",
       visualBell: false,
       popOnBell: false,
       scrollback: 10000,
@@ -76,7 +76,7 @@
     });
 
     // 开始渲染div
-    var terminal = document.getElementById('terminal')
+    var terminal = document.getElementById("terminal")
     term.open(terminal, false)
 
     // 自适应
@@ -86,20 +86,20 @@
     })
 
     // 接口
-    post("/create_exec", query, function(event) {
+    post("create_exec", query, function(event) {
       var protocol = location.protocol.indexOf("https") == 0 ? "wss" : "ws"
       var port = location.port ? ":" + location.port : ""
       var wsurl = protocol + "://" + location.hostname + port + location.pathname + "start_exec?eid=" + event.eid
       var websocket = new WebSocket(wsurl);
       term.attach(websocket)
-      term.on('resize', function(size) {
-        post('/resize_exec_tty', {
+      term.on("resize", function(size) {
+        post("resize_exec_tty", {
           eid: event.eid,
           height: size.rows,
           width: size.cols,
         })
       });
-      term.on('title', function(e) {
+      term.on("title", function(e) {
         document.title = e;
       })
     }, function(e) {
