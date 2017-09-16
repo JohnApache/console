@@ -76,7 +76,6 @@ func execRouter() (*mux.Router, error) {
 
 		// 创建连接
 		exec, err := sesss.CreateExec(req)
-
 		if err != nil {
 			rend.JSON(w, http.StatusBadRequest, errMsg{err.Error()})
 			return
@@ -95,6 +94,10 @@ func execRouter() (*mux.Router, error) {
 		eid := req.FormValue("eid")
 
 		client := getSession(eid)
+		if client == nil {
+			rend.JSON(ws, http.StatusBadRequest, nil)
+			return
+		}
 		defer delSession(eid)
 
 		// 执行连接
@@ -118,6 +121,10 @@ func execRouter() (*mux.Router, error) {
 		}
 
 		client := getSession(req.EId)
+		if client == nil {
+			rend.JSON(w, http.StatusBadRequest, nil)
+			return
+		}
 
 		err = client.ResizeExecTTY(req)
 		if err != nil {
