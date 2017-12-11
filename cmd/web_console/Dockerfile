@@ -9,7 +9,7 @@ FROM alpine:3.6
 WORKDIR /usr/local/bin/
 
 COPY --from=builder /tmp/gopath/bin/web_console /usr/local/bin/
-COPY --from=builder /tmp/gopath/src/github.com/wzshiming/console/cmd/web_console/static/ /usr/local/bin/
+COPY --from=builder /tmp/gopath/src/github.com/wzshiming/console/cmd/web_console/static/ /usr/local/bin/static/
 
 VOLUME /var/run/docker.sock
 EXPOSE 8888
