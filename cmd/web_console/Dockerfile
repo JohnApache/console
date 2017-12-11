@@ -1,7 +1,7 @@
 FROM golang:1.9-alpine AS builder
 
 ENV GOBIN=$GOPATH/bin
-RUN apk add -U git gcc
+RUN apk add -U git gcc linux-headers
 RUN go get -u -v github.com/wzshiming/console/cmd/web_console
 
 FROM alpine:3.6
