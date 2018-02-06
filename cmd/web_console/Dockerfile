@@ -6,10 +6,10 @@ ENV GOBIN=$GOPATH/bin/
 RUN apk add -U git gcc musl-dev
 RUN go get -u -v github.com/wzshiming/console/cmd/web_console
 
-FROM scratch
+FROM alpine:3.7
 COPY --from=builder /tmp/gopath/bin/web_console /
 # COPY --from=builder /tmp/gopath/src/github.com/wzshiming/console/cmd/web_console/static/ /static/
 WORKDIR /
 VOLUME /var/run/docker.sock
 EXPOSE 8888
-CMD /web_console
+ENTRYPOINT [ "/web_console" ]
